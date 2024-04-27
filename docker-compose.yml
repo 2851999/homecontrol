@@ -13,24 +13,24 @@ services:
 
   api:
     build:
-      context: ~/git/homecontrol-api
-      # context: https://github.com/2851999/homecontrol-api.git#main
+      # context: ~/git/homecontrol-api
+      context: https://github.com/2851999/homecontrol-api.git#remove-config-from-prod-build-%2313
       dockerfile: Dockerfile.prod
     restart: always
     volumes:
       - ./config/logging.ini:/homecontrol-api/logging.ini
       - ./config:/etc/homecontrol
     # Required for mDNS discovery (Won't work on Windows/WSL)
-    # network_mode: "host"
-    ports:
-      - "8000:8000"
+    network_mode: "host"
+    # ports:
+    #   - "8000:8000"
     depends_on:
       - database
 
   ui:
     build:
-      context: ~/git/homecontrol-ui
-      # context: https://github.com/2851999/homecontrol-ui.git#main
+      # context: ~/git/homecontrol-ui
+      context: https://github.com/2851999/homecontrol-ui.git#remove-config-from-prod-build-%236
       dockerfile: Dockerfile.prod
     volumes:
       - ./config/ui.json:/homecontrol-ui/public/config.json
