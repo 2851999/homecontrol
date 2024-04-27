@@ -1,0 +1,4 @@
+{
+    "ca_cert": "PATH",
+    "mDNS_discovery": true
+}
