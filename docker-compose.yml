@@ -32,8 +32,6 @@ services:
       context: ~/git/homecontrol-ui
       # context: https://github.com/2851999/homecontrol-ui.git#main
       dockerfile: Dockerfile.prod
-      args:
-        - NEXT_PUBLIC_HOMECONTROL_API_URL=${NEXT_PUBLIC_HOMECONTROL_API_URL}
     volumes:
       - ./config/ui.json:/homecontrol-ui/public/config.json
     restart: always

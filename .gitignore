@@ -164,6 +164,7 @@ config/midea.json
 config/database.json
 config/hue.json
 config/api.json
+config/ui.json
 config/logging.ini
 
 .env
