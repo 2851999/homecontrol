@@ -1,4 +1,4 @@
 {
-    "ca_cert": "PATH",
+    "ca_cert": "/etc/homecontrol/huecert.pem",
     "mDNS_discovery": true
 }

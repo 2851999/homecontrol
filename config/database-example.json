@@ -1,7 +1,7 @@
 {
-    "driver": "sqlite",
+    "driver": "postgresql",
     "username": null,
     "password": null,
-    "host": null,
-    "port": null
+    "host": "localhost",
+    "port": 5432
 }
