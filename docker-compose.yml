@@ -23,6 +23,11 @@ services:
     network_mode: "host"
     # ports:
     #   - "8000:8000"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.homecontrol_api.rule=Host(`${HOSTNAME}`) && PathPrefix(`/homecontrol-api`)"
+      # Need port here as host networking wont specify so can't use it from above
+      - "traefik.http.services.homecontrol_api.loadbalancer.server.port=8000"
     depends_on:
       - database
 
@@ -35,6 +40,38 @@ services:
       - ./config/ui.json:/homecontrol-ui/public/config.json
     restart: always
     ports:
-      - "80:3000"
+      - "3000:3000"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.homecontrol_ui.rule=Host(`${HOSTNAME}`)"
+      # Forces name rather than ui_homecontrol
+      - "traefik.http.services.homecontrol_ui.loadbalancer.server.port=3000"
     depends_on:
       - api
+
+  traefik:
+    image: traefik:v2.11
+    command:
+      - "--log.level=INFO"
+      - "--accessLog=true"
+      - "--api.dashboard=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    # Will get bad gateway if not using host networking here while also using it above for homecontrol-api
+    network_mode: "host"
+    # ports:
+    #   - "80:80"
+    #   - "8080:8080"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.dashboard.rule=Host(`${HOSTNAME}`) && PathPrefix(`/dashboard`, `/api`)"
+      - "traefik.http.routers.dashboard.service=api@internal"
+      - "traefik.http.routers.dashboard.middlewares=auth"
+      - "traefik.http.middlewares.auth.basicauth.users=${TRAEFIK_DASHBOARD_USER}"
+      # https://stackoverflow.com/questions/58580782/traefik-2-0-port-is-missing-for-internal-dashboard
+      - "traefik.http.services.justAdummyService.loadbalancer.server.port=1337"
+    depends_on:
+      - api
+      - ui
