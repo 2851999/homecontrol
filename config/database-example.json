@@ -1,0 +1,7 @@
+{
+    "driver": "postgresql",
+    "username": null,
+    "password": null,
+    "host": "localhost",
+    "port": 5432
+}
