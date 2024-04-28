@@ -13,7 +13,7 @@ services:
   api:
     build:
       # context: ~/git/homecontrol-api
-      context: https://github.com/2851999/homecontrol-api.git#remove-config-from-prod-build-%2313
+      context: https://github.com/2851999/homecontrol-api.git#main
       dockerfile: Dockerfile.prod
     restart: always
     volumes:
@@ -29,7 +29,7 @@ services:
   ui:
     build:
       # context: ~/git/homecontrol-ui
-      context: https://github.com/2851999/homecontrol-ui.git#remove-config-from-prod-build-%236
+      context: https://github.com/2851999/homecontrol-ui.git#main
       dockerfile: Dockerfile.prod
     volumes:
       - ./config/ui.json:/homecontrol-ui/public/config.json
