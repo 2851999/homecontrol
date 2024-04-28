@@ -1,0 +1,6 @@
+Generate TRAEFIK_DASHBOARD_HASHED_PASSWORD with
+
+sudo apt-get install apache2-utils
+echo $(htpasswd -nb user password) | sed -e s/\\$/\\$\\$/g
+
+(See https://doc.traefik.io/traefik/middlewares/http/basicauth/)
