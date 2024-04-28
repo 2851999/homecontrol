@@ -167,7 +167,13 @@ config/api.json
 config/ui.json
 config/logging.ini
 
-.env
-
 # Local hue cert
 config/huecert.pem
+
+traefik-dynamic.yml
+
+# Local certificates
+certificates/*
+!certificates/.keep
+
+.env

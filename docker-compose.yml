@@ -28,6 +28,9 @@ services:
       - "traefik.http.routers.homecontrol_api.rule=Host(`${HOSTNAME}`) && PathPrefix(`/homecontrol-api`)"
       # Need port here as host networking wont specify so can't use it from above
       - "traefik.http.services.homecontrol_api.loadbalancer.server.port=8000"
+      # HTTPS
+      - "traefik.http.routers.homecontrol_api.entrypoints=websecure"
+      - "traefik.http.routers.homecontrol_api.tls=true"
     depends_on:
       - database
 
@@ -46,6 +49,9 @@ services:
       - "traefik.http.routers.homecontrol_ui.rule=Host(`${HOSTNAME}`)"
       # Forces name rather than ui_homecontrol
       - "traefik.http.services.homecontrol_ui.loadbalancer.server.port=3000"
+      # HTTPS
+      - "traefik.http.routers.homecontrol_ui.entrypoints=websecure"
+      - "traefik.http.routers.homecontrol_ui.tls=true"
     depends_on:
       - api
 
@@ -57,13 +63,22 @@ services:
       - "--api.dashboard=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
+      # Global HTTP to HTTPS redirect
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
+      # HTTPS
+      - "--entrypoints.websecure.address=:443"
+      - "--providers.file.filename=/etc/traefik/dynamic.yml"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - ./traefik-dynamic.yml:/etc/traefik/dynamic.yml:ro
+      - ./certificates:/etc/certs:ro
     # Will get bad gateway if not using host networking here while also using it above for homecontrol-api
     network_mode: "host"
     # ports:
     #   - "80:80"
-    #   - "8080:8080"
+    #   - "443:443"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.dashboard.rule=Host(`${HOSTNAME}`) && PathPrefix(`/dashboard`, `/api`)"
@@ -72,6 +87,9 @@ services:
       - "traefik.http.middlewares.auth.basicauth.users=${TRAEFIK_DASHBOARD_USER}"
       # https://stackoverflow.com/questions/58580782/traefik-2-0-port-is-missing-for-internal-dashboard
       - "traefik.http.services.justAdummyService.loadbalancer.server.port=1337"
+      # HTTPS
+      - "traefik.http.routers.dashboard.entrypoints=websecure"
+      - "traefik.http.routers.dashboard.tls=true"
     depends_on:
       - api
       - ui
