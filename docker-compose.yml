@@ -13,7 +13,7 @@ services:
   api:
     build:
       # context: ~/git/homecontrol-api
-      context: https://github.com/2851999/homecontrol-api.git#configure-root-path-%2315
+      context: https://github.com/2851999/homecontrol-api.git#main
       dockerfile: Dockerfile.prod
     restart: always
     volumes:
