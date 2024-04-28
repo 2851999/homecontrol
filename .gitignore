@@ -159,7 +159,7 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-# Local configuration files
+# Local configuration files for api
 config/midea.json
 config/database.json
 config/hue.json
@@ -167,7 +167,13 @@ config/api.json
 config/ui.json
 config/logging.ini
 
-.env
-
 # Local hue cert
 config/huecert.pem
+
+# Other local configuration files
+.env
+traefik-dynamic.yml
+
+# Local certificates
+certificates/*
+!certificates/.keep
