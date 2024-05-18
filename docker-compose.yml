@@ -74,6 +74,7 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - ./traefik-dynamic.yml:/etc/traefik/dynamic.yml:ro
       - ./certificates:/etc/certs:ro
+    restart: always
     # Will get bad gateway if not using host networking here while also using it above for homecontrol-api
     network_mode: "host"
     # ports:
