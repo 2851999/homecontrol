@@ -13,7 +13,7 @@ services:
   api:
     build:
       # context: ~/git/homecontrol-api
-      context: https://github.com/2851999/homecontrol-api.git#v0.5.2
+      context: https://github.com/2851999/homecontrol-api.git#v0.6.0
       dockerfile: Dockerfile.prod
     restart: always
     volumes:
@@ -37,7 +37,7 @@ services:
   ui:
     build:
       # context: ~/git/homecontrol-ui
-      context: https://github.com/2851999/homecontrol-ui.git#v0.4.1
+      context: https://github.com/2851999/homecontrol-ui.git#v0.5.0
       dockerfile: Dockerfile.prod
     volumes:
       - ./config/ui.json:/homecontrol-ui/public/config.json
