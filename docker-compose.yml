@@ -37,7 +37,7 @@ services:
   ui:
     build:
       # context: ~/git/homecontrol-ui
-      context: https://github.com/2851999/homecontrol-ui.git#v0.6.3
+      context: https://github.com/2851999/homecontrol-ui.git#v0.7.0
       dockerfile: Dockerfile.prod
     volumes:
       - ./config/ui.json:/homecontrol-ui/public/config.json
