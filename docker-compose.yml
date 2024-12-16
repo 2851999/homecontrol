@@ -1,6 +1,6 @@
 services:
   database:
-    image: postgres:17.2
+    image: postgres:16.6
     restart: always
     env_file: .env
     ports:
